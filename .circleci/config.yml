@@ -44,7 +44,7 @@ workflows:
                  /.*/
       - deploy:
           requires:
-            - test
+            - ci
           filters:
             tags:
               only:
