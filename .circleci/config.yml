@@ -1,4 +1,8 @@
 version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@1.0.15
+
 jobs:
   ci:
     docker:
@@ -14,6 +18,13 @@ jobs:
           root: .
           paths:
             - dist/*
+      - aws-s3/sync:
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
+          from: dist
+          overwrite: true
+          to: 's3://teamest.org'
 
 workflows:
   version: 2
