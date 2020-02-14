@@ -18,6 +18,13 @@ jobs:
           root: .
           paths:
             - dist/*
+
+  deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
       - aws-s3/sync:
           arguments: |
             --acl public-read \
@@ -31,6 +38,11 @@ workflows:
   ci:
     jobs:
       - ci:
+          filters:
+            tags:
+              only:
+                 /.*/
+      - deploy:
           filters:
             tags:
               only:
