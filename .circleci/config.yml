@@ -1,0 +1,49 @@
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@1.0.15
+
+jobs:
+  ci:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Run Unit Tests
+          command: |
+            npm ci
+            npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build/*
+
+  deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - attach_workspace:
+          at: .
+      - aws-s3/sync:
+          arguments: |
+            --acl public-read \
+            --cache-control "max-age=86400"
+          from: build
+          overwrite: true
+          to: 's3://teamest.org'
+
+workflows:
+  version: 2
+  ci:
+    jobs:
+      - ci:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - ci
+          filters:
+            tags:
+              only: /.*/
