@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import { registerGoogleAuthHandlers } from './glue/auth.glue';
+
+registerGoogleAuthHandlers();
 
 ReactDOM.render(
   <React.StrictMode>
