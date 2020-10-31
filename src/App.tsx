@@ -9,7 +9,14 @@ import BrowsePage from './pages/browse/BrowsePage';
 import styled, { ThemeProvider } from 'styled-components';
 import Theme from './styles/theme';
 import styles from './styles/styles';
-import Header from './frame/header';
+import Header from './frame/header/Header';
+import Navigation from './frame/navigation/Navigation';
+import MatchesPage from './pages/matches/MatchesPage';
+import {
+  Switch,
+  Route,
+  useHistory,
+} from 'react-router-dom';
 
 const RootContainer = styled.div`
   width: 100%;
@@ -19,9 +26,19 @@ const RootContainer = styled.div`
   font-family: ${(props) => props.theme.typography.defaultFont};
 `;
 
+const ContentContainer = styled.div`
+  margin: auto;
+  margin-top: 2rem;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+`;
+
 function App() {
   const authState = useGlobalConnect<IAuthState>(authService);
   const [selectedTheme, setSelectedTheme] = useState<Theme>('light');
+
+  const history = useHistory();
 
   return (
     <ThemeProvider theme={styles(selectedTheme)}>
@@ -33,14 +50,26 @@ function App() {
           }}
         >
           <Header
-            onDarkModeToggled={() =>
-              setSelectedTheme((previous) =>
-                previous === 'light' ? 'dark' : 'light',
-              )
-            }
+            currentTheme={selectedTheme}
+            onThemeChanged={(theme) => setSelectedTheme(theme)}
           />
-          <LoginPage />
-          <BrowsePage />
+          <Navigation onNavigate={(path) => history.push(path)} />
+          <ContentContainer>
+            {(authState.state === 'unauthenticated' ||
+              authState.state === 'loading') && <LoginPage />}
+            {authState.state === 'authenticated' && (
+              <>
+                <Switch>
+                  <Route path='/browse'>
+                    <BrowsePage />
+                  </Route>
+                  <Route path='/matches'>
+                    <MatchesPage />
+                  </Route>
+                </Switch>
+              </>
+            )}
+          </ContentContainer>
         </AuthContext.Provider>
       </RootContainer>
     </ThemeProvider>

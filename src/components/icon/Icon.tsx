@@ -1,9 +1,16 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCoffee,
+  faMoon,
+  faSun,
+  faVolleyballBall,
+  faListUl,
+  faChevronLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
-export type IconType = 'moon' | 'sun';
+export type IconType = 'moon' | 'sun' | 'volleyball' | 'list' | 'chevron-left';
 
 export interface IIconProps {
   type: IconType;
@@ -16,6 +23,12 @@ function resolveIcon(type: IconType) {
       return faMoon;
     case 'sun':
       return faSun;
+    case 'volleyball':
+      return faVolleyballBall;
+    case 'list':
+      return faListUl;
+    case 'chevron-left':
+      return faChevronLeft;
     default:
       return faCoffee;
   }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Page from '../../frame/page/Page';
 import { CompetitionService } from '../../services/competition/competition.service';
 import {
   ICompetitionData,
@@ -19,12 +20,12 @@ export default function BrowsePage() {
     ICompetitionFilter
   >(browseCompetitionService, filters);
   return (
-    <>
+    <Page heading='Competitions'>
       <CompetitionList competitions={loading ? undefined : competitions} />
       <CompetitionFilter
         filters={filters}
         onFiltersChanged={(newFilters) => setFilters(newFilters)}
       />
-    </>
+    </Page>
   );
 }

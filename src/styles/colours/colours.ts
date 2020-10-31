@@ -7,6 +7,8 @@ export interface IColours {
   mainFontColour: string;
   emphasisBackground: string;
   emphasisFontColour: string;
+  secondaryEmphasisBackground: string;
+  secondaryEmphasisFontColour: string;
   buttonColour: string;
 }
 

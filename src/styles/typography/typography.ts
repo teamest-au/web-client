@@ -1,6 +1,7 @@
 export interface ITypography {
   defaultFont: string;
   titleSize: string;
+  pageHeadingSize: string;
 }
 
 const fonts = {
@@ -10,6 +11,7 @@ const fonts = {
 const typography: ITypography = {
   defaultFont: fonts.roboto,
   titleSize: '1.5rem',
+  pageHeadingSize: '1.25rem',
 };
 
 export default typography;

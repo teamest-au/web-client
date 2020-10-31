@@ -12,9 +12,6 @@ const AuthTest = () => {
           {state.user.name}
           <br />
           {state.user.email}
-          {state.user.imageUrl && (
-            <img src={state.user.imageUrl} alt='profile' />
-          )}
         </div>
       )}
       <div>
