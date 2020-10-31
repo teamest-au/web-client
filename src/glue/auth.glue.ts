@@ -1,4 +1,4 @@
-import authService from '../services/auth.service';
+import authService from '../services/auth/auth.service';
 
 export function registerGoogleAuthHandlers() {
   // Register Sign Out Action

@@ -1,33 +1,33 @@
-import { Observable, BehaviorSubject } from 'rxjs';
 import { defaultAuthState, IAuthState, IAuthUser } from './auth.types';
 import { v4 as uuidv4 } from 'uuid';
+import { GlobalBaseService } from '../global.base.service';
 
-export class AuthService {
-  private authSubject$ = new BehaviorSubject<IAuthState>({
-    state: 'unauthenticated',
-    user: undefined,
-  });
+export class AuthService extends GlobalBaseService<IAuthState> {
   private signOutActions: {
     handle: string;
     handler: () => Promise<void>;
   }[] = [];
 
   constructor() {
+    super({
+      state: 'unauthenticated',
+      user: undefined,
+    });
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   handleSignIn(user: IAuthUser) {
-    this.authSubject$.next({
+    this.updateValue({
       state: 'authenticated',
       user,
     });
   }
 
   async handleSignOut() {
-    this.authSubject$.next({ ...defaultAuthState, state: 'loading' });
+    this.updateValue({ ...defaultAuthState, state: 'loading' });
     await Promise.all(this.signOutActions.map((action) => action.handler()));
-    this.authSubject$.next(defaultAuthState);
+    this.updateValue(defaultAuthState);
   }
 
   addSignOutAction(handler: () => Promise<void>) {
@@ -46,10 +46,6 @@ export class AuthService {
     this.signOutActions = this.signOutActions.filter(
       (handler) => handler.handle !== handle,
     );
-  }
-
-  getAuthStateObservable(): Observable<IAuthState> {
-    return this.authSubject$;
   }
 }
 
