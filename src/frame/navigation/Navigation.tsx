@@ -5,12 +5,20 @@ import NavigationItem from './NavigationItem';
 import navigationEntries from './navigation_entries';
 
 const Container = styled.div`
-  display: flex;
-  * {
-    flex-grow: 1;
-  }
   background-color: ${(props) =>
     props.theme.colours.secondaryEmphasisBackground};
+  color: ${(props) => props.theme.colours.emphasisFontColour};
+  display: flex;
+  justify-content: center;
+`;
+
+const NavigationContainer = styled.div`
+  width: 100%;
+  max-width: ${(props) => props.theme.spacing.maxPageWidth};
+  display: flex;
+  > * {
+    margin-right: 2rem;
+  }
   color: ${(props) => props.theme.colours.secondaryEmphasisFontColour};
 `;
 
@@ -22,13 +30,15 @@ export default function Navigation(props: INavigationProps) {
   const { onNavigate } = props;
   return (
     <Container>
-      {navigationEntries.map((entry) => (
-        <NavigationItem
-          key={entry.name}
-          entry={entry}
-          onNavigate={() => onNavigate(entry.path)}
-        />
-      ))}
+      <NavigationContainer>
+        {navigationEntries.map((entry) => (
+          <NavigationItem
+            key={entry.name}
+            entry={entry}
+            onNavigate={() => onNavigate(entry.path)}
+          />
+        ))}
+      </NavigationContainer>
     </Container>
   );
 }

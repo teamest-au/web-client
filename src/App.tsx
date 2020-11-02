@@ -29,7 +29,7 @@ const RootContainer = styled.div`
 const ContentContainer = styled.div`
   margin: auto;
   margin-top: 2rem;
-  max-width: 40rem;
+  max-width: ${props => props.theme.spacing.maxPageWidth};
   display: flex;
   flex-direction: column;
 `;

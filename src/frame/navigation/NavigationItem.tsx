@@ -9,7 +9,7 @@ export interface INavigationItemProps {
 }
 
 const Container = styled.div`
-  padding: 0.25rem;
+  padding: 0.5rem;
   text-align: center;
   * {
     margin: 0 0.3rem;
