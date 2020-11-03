@@ -32,10 +32,6 @@ jobs:
             --cache-control "max-age=86400"
           from: build
           to: 's3://teamest.org'
-    post-steps:
-      - jira/notify:
-          environment_type: production
-          job_type: deployment
 
 workflows:
   version: 2
@@ -51,3 +47,7 @@ workflows:
           filters:
             tags:
               only: /.*/
+          post-steps:
+            - jira/notify:
+                environment_type: production
+                job_type: deployment
