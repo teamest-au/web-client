@@ -8,7 +8,6 @@ jobs:
   ci:
     docker:
       - image: circleci/node:10
-    name: Build & Test
     steps:
       - checkout
       - run:
@@ -24,7 +23,6 @@ jobs:
   deploy:
     docker:
       - image: 'cimg/python:3.6'
-    name: Deploy
     steps:
       - attach_workspace:
           at: .
