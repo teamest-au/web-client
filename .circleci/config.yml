@@ -2,11 +2,13 @@ version: 2.1
 
 orbs:
   aws-s3: circleci/aws-s3@2.0.0
+  jira: circleci/jira@1.2.2
 
 jobs:
   ci:
     docker:
       - image: circleci/node:10
+    name: Build & Test
     steps:
       - checkout
       - run:
@@ -22,6 +24,7 @@ jobs:
   deploy:
     docker:
       - image: 'cimg/python:3.6'
+    name: Deploy
     steps:
       - attach_workspace:
           at: .
@@ -31,6 +34,10 @@ jobs:
             --cache-control "max-age=86400"
           from: build
           to: 's3://teamest.org'
+    post-steps:
+      - jira/notify:
+          environment_type: production
+          job_type: deployment
 
 workflows:
   version: 2
