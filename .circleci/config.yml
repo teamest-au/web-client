@@ -47,7 +47,7 @@ workflows:
           filters:
             tags:
               only: /.*/
-          post-steps:
-            - jira/notify:
-                environment_type: production
-                job_type: deployment
+          # post-steps:
+          #   - jira/notify:
+          #       environment_type: production
+          #       job_type: deployment
